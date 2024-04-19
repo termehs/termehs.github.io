@@ -4,7 +4,7 @@ subtitle: "Meet the toolkit"
 author: "<br>Termeh Shafie"
 output:
   xaringan::moon_reader:
-    css: ["../xaringan-themer.css", "../slides.css"]
+    css: ["xaringan-themer.css", "slides.css"]
     lib_dir: libs
     nature:
       ratio: "16:9"
@@ -14,7 +14,7 @@ output:
 ---
 
 
-```{r child = "../setup.Rmd"}
+```{r child = "setup.Rmd"}
 ```
 
 ```{r packages, echo=FALSE, message=FALSE, warning=FALSE}
