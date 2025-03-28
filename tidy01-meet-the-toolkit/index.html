@@ -160,7 +160,7 @@ class: middle
   - .pink[R]
   - .pink[RStudio]
   - .pink[tidyverse]
-  - .pink[R Markdown]
+  - .pink[R Markdown/Quarto]
 ]
 
 ---
@@ -217,7 +217,7 @@ Long-term goals:
 ## Toolkit for reproducibility
 
 - Scriptability `\(\rightarrow\)` R
-- Literate programming (code, narrative, output in one place) `\(\rightarrow\)` R Markdown
+- Literate programming (code, narrative, output in one place) `\(\rightarrow\)` R Markdown/Quarto
 - Version control `\(\rightarrow\)` Git / GitHub
 
 ---
@@ -249,14 +249,9 @@ class: middle
 
 - **Packages** are the fundamental units of reproducible R code. They include reusable R functions, the documentation that describes how to use them, and sample data&lt;sup&gt;1&lt;/sup&gt;
 
-- As of September 2020, there are over 16,000 R packages available on **CRAN** (the Comprehensive R Archive Network)&lt;sup&gt;2&lt;/sup&gt;
-
-- We're going to work with a small (but important) subset of these!
 
 .footnote[
 &lt;sup&gt;1&lt;/sup&gt; Wickham and Bryan, [R Packages](https://r-pkgs.org/).
-
-&lt;sup&gt;2&lt;/sup&gt; [CRAN contributed packages](https://cran.r-project.org/web/packages/).
 ]
 
 
@@ -267,7 +262,7 @@ class: middle
 - Functions are (most often) verbs, followed by what they will be applied to in parentheses:
 
 
-```r
+``` r
 do_this(to_this)
 do_that(to_this, to_that, with_those)
 ```
@@ -277,7 +272,7 @@ do_that(to_this, to_that, with_those)
 - Packages are installed with the `install.packages` function and loaded with the `library` function, once per session:
 
 
-```r
+``` r
 install.packages("package_name")
 library(package_name)
 ```
@@ -290,7 +285,7 @@ library(package_name)
 
 .small[
 
-```r
+``` r
 dataframe$var_name
 ```
 ]
@@ -300,7 +295,7 @@ dataframe$var_name
 - Object documentation can be accessed with `?`
 
 
-```r
+``` r
 ?mean
 ```
 
