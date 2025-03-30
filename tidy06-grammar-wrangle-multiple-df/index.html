@@ -4,11 +4,11 @@
     <title>Grammar of Data Wrangling II</title>
     <meta charset="utf-8" />
     <meta name="author" content=" Termeh Shafie" />
-    <script src="05-grammar-wrangle-multiple-df_files/header-attrs/header-attrs.js"></script>
-    <link href="05-grammar-wrangle-multiple-df_files/font-awesome/css/all.min.css" rel="stylesheet" />
-    <link href="05-grammar-wrangle-multiple-df_files/font-awesome/css/v4-shims.min.css" rel="stylesheet" />
-    <link href="05-grammar-wrangle-multiple-df_files/panelset/panelset.css" rel="stylesheet" />
-    <script src="05-grammar-wrangle-multiple-df_files/panelset/panelset.js"></script>
+    <script src="06-grammar-wrangle-multiple-df_files/header-attrs/header-attrs.js"></script>
+    <link href="06-grammar-wrangle-multiple-df_files/font-awesome/css/all.min.css" rel="stylesheet" />
+    <link href="06-grammar-wrangle-multiple-df_files/font-awesome/css/v4-shims.min.css" rel="stylesheet" />
+    <link href="06-grammar-wrangle-multiple-df_files/panelset/panelset.css" rel="stylesheet" />
+    <script src="06-grammar-wrangle-multiple-df_files/panelset/panelset.js"></script>
     <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
     <link rel="stylesheet" href="slides.css" type="text/css" />
   </head>
@@ -85,7 +85,7 @@ Source: [Discover Magazine](https://www.discovermagazine.com/the-sciences/meet-1
 
 .panel[.panel-name[professions]
 
-```r
+``` r
 professions
 ```
 
@@ -108,7 +108,7 @@ professions
 
 .panel[.panel-name[dates]
 
-```r
+``` r
 dates
 ```
 
@@ -129,7 +129,7 @@ dates
 
 .panel[.panel-name[works]
 
-```r
+``` r
 works
 ```
 
@@ -178,7 +178,7 @@ works
 
 .pull-left[
 
-```r
+``` r
 names(professions)
 ```
 
@@ -186,7 +186,7 @@ names(professions)
 ## [1] "name"       "profession"
 ```
 
-```r
+``` r
 names(dates)
 ```
 
@@ -194,7 +194,7 @@ names(dates)
 ## [1] "name"       "birth_year" "death_year"
 ```
 
-```r
+``` r
 names(works)
 ```
 
@@ -204,7 +204,7 @@ names(works)
 ]
 .pull-right[
 
-```r
+``` r
 nrow(professions)
 ```
 
@@ -212,7 +212,7 @@ nrow(professions)
 ## [1] 10
 ```
 
-```r
+``` r
 nrow(dates)
 ```
 
@@ -220,7 +220,7 @@ nrow(dates)
 ## [1] 8
 ```
 
-```r
+``` r
 nrow(works)
 ```
 
@@ -240,7 +240,7 @@ class: middle
 ## Joining data frames
 
 
-```r
+``` r
 something_join(x, y)
 ```
 
@@ -262,7 +262,7 @@ For the next few slides...
 .pull-left[
 
 
-```r
+``` r
 x
 ```
 
@@ -278,7 +278,7 @@ x
 .pull-right[
 
 
-```r
+``` r
 y
 ```
 
@@ -301,7 +301,7 @@ y
 ]
 .pull-right[
 
-```r
+``` r
 left_join(x, y)
 ```
 
@@ -320,7 +320,7 @@ left_join(x, y)
 ## `left_join()`
 
 
-```r
+``` r
 professions %&gt;%
 * left_join(dates)
 ```
@@ -350,7 +350,7 @@ professions %&gt;%
 ]
 .pull-right[
 
-```r
+``` r
 right_join(x, y)
 ```
 
@@ -370,7 +370,7 @@ right_join(x, y)
 
 
 
-```r
+``` r
 professions %&gt;%
 * right_join(dates)
 ```
@@ -398,7 +398,7 @@ professions %&gt;%
 ]
 .pull-right[
 
-```r
+``` r
 full_join(x, y)
 ```
 
@@ -418,7 +418,7 @@ full_join(x, y)
 ## `full_join()`
 
 
-```r
+``` r
 dates %&gt;%
 * full_join(works)
 ```
@@ -448,7 +448,7 @@ dates %&gt;%
 ]
 .pull-right[
 
-```r
+``` r
 inner_join(x, y)
 ```
 
@@ -466,7 +466,7 @@ inner_join(x, y)
 ## `inner_join()`
 
 
-```r
+``` r
 dates %&gt;%
 * inner_join(works)
 ```
@@ -493,7 +493,7 @@ dates %&gt;%
 ]
 .pull-right[
 
-```r
+``` r
 semi_join(x, y)
 ```
 
@@ -511,7 +511,7 @@ semi_join(x, y)
 ## `semi_join()`
 
 
-```r
+``` r
 dates %&gt;%
 * semi_join(works)
 ```
@@ -538,7 +538,7 @@ dates %&gt;%
 ]
 .pull-right[
 
-```r
+``` r
 anti_join(x, y)
 ```
 
@@ -555,7 +555,7 @@ anti_join(x, y)
 ## `anti_join()`
 
 
-```r
+``` r
 dates %&gt;%
 * anti_join(works)
 ```
@@ -572,7 +572,7 @@ dates %&gt;%
 ## Putting it altogether
 
 
-```r
+``` r
 professions %&gt;%
   left_join(dates) %&gt;%
   left_join(works)
@@ -615,7 +615,7 @@ class: middle
 
 .pull-left[
 
-```r
+``` r
 enrolment
 ```
 
@@ -630,7 +630,7 @@ enrolment
 ]
 .pull-right[
 
-```r
+``` r
 survey
 ```
 
@@ -653,7 +653,7 @@ survey
 
 .panel[.panel-name[In class]
 
-```r
+``` r
 enrolment %&gt;% 
 * left_join(survey, by = "id")
 ```
@@ -670,7 +670,7 @@ enrolment %&gt;%
 
 .panel[.panel-name[Survey missing]
 
-```r
+``` r
 enrolment %&gt;% 
 * anti_join(survey, by = "id")
 ```
@@ -685,7 +685,7 @@ enrolment %&gt;%
 
 .panel[.panel-name[Dropped]
 
-```r
+``` r
 survey %&gt;% 
 * anti_join(enrolment, by = "id")
 ```
@@ -722,7 +722,7 @@ class: middle
 
 .pull-left[
 
-```r
+``` r
 purchases
 ```
 
@@ -739,7 +739,7 @@ purchases
 ]
 .pull-right[
 
-```r
+``` r
 prices
 ```
 
@@ -764,7 +764,7 @@ prices
 .panel[.panel-name[Total revenue]
 .pull-left[
 
-```r
+``` r
 purchases %&gt;% 
 * left_join(prices)
 ```
@@ -782,7 +782,7 @@ purchases %&gt;%
 ]
 .pull-right[
 
-```r
+``` r
 purchases %&gt;% 
   left_join(prices) %&gt;%
 * summarise(total_revenue = sum(price))
@@ -801,7 +801,7 @@ purchases %&gt;%
 
 .pull-left[
 
-```r
+``` r
 purchases %&gt;% 
   left_join(prices)
 ```
@@ -819,7 +819,7 @@ purchases %&gt;%
 ]
 .pull-right[
 
-```r
+``` r
 purchases %&gt;% 
   left_join(prices) %&gt;%
 * group_by(customer_id) %&gt;%

@@ -4,11 +4,11 @@
     <title>Tips for effective data visualization</title>
     <meta charset="utf-8" />
     <meta name="author" content=" Termeh Shafie" />
-    <script src="11-effective-dataviz_files/header-attrs/header-attrs.js"></script>
-    <link href="11-effective-dataviz_files/font-awesome/css/all.min.css" rel="stylesheet" />
-    <link href="11-effective-dataviz_files/font-awesome/css/v4-shims.min.css" rel="stylesheet" />
-    <link href="11-effective-dataviz_files/panelset/panelset.css" rel="stylesheet" />
-    <script src="11-effective-dataviz_files/panelset/panelset.js"></script>
+    <script src="04-effective-dataviz_files/header-attrs/header-attrs.js"></script>
+    <link href="04-effective-dataviz_files/font-awesome/css/all.min.css" rel="stylesheet" />
+    <link href="04-effective-dataviz_files/font-awesome/css/v4-shims.min.css" rel="stylesheet" />
+    <link href="04-effective-dataviz_files/panelset/panelset.css" rel="stylesheet" />
+    <script src="04-effective-dataviz_files/panelset/panelset.js"></script>
     <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
     <link rel="stylesheet" href="slides.css" type="text/css" />
   </head>
@@ -48,7 +48,7 @@ class: middle
 &lt;img src="img/pie-3d.jpg" width="100%" style="display: block; margin: auto;" /&gt;
 ]
 .pull-right-wide[
-&lt;img src="11-effective-dataviz_files/figure-html/pie-to-bar-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="04-effective-dataviz_files/figure-html/pie-to-bar-1.png" width="100%" style="display: block; margin: auto;" /&gt;
 ]
 
 
@@ -58,10 +58,10 @@ class: middle
 ## Use	color	to	draw	attention
 
 .pull-left[
-&lt;img src="11-effective-dataviz_files/figure-html/unnamed-chunk-2-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="04-effective-dataviz_files/figure-html/unnamed-chunk-2-1.png" width="100%" style="display: block; margin: auto;" /&gt;
 ]
 .pull-right[
-&lt;img src="11-effective-dataviz_files/figure-html/unnamed-chunk-3-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="04-effective-dataviz_files/figure-html/unnamed-chunk-3-1.png" width="100%" style="display: block; margin: auto;" /&gt;
 ]
 
 ---
@@ -107,7 +107,7 @@ In September 2019, YouGov survey asked 1,639 GB adults the following question:
 .pull-right[
 
 
-&lt;img src="11-effective-dataviz_files/figure-html/unnamed-chunk-6-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="04-effective-dataviz_files/figure-html/unnamed-chunk-6-1.png" width="100%" style="display: block; margin: auto;" /&gt;
 ]
 
 .footnote[ 
@@ -127,12 +127,12 @@ class: middle
 .panelset[
 
 .panel[.panel-name[Plot]
-&lt;img src="11-effective-dataviz_files/figure-html/unnamed-chunk-7-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+&lt;img src="04-effective-dataviz_files/figure-html/unnamed-chunk-7-1.png" width="60%" style="display: block; margin: auto;" /&gt;
 ]
 
 .panel[.panel-name[Code]
 
-```r
+``` r
 ggplot(brexit, aes(x = opinion)) +
   geom_bar()
 ```
@@ -147,7 +147,7 @@ ggplot(brexit, aes(x = opinion)) +
 .panelset[
 
 .panel[.panel-name[Plot]
-&lt;img src="11-effective-dataviz_files/figure-html/unnamed-chunk-8-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+&lt;img src="04-effective-dataviz_files/figure-html/unnamed-chunk-8-1.png" width="60%" style="display: block; margin: auto;" /&gt;
 ]
 
 .panel[.panel-name[Code]
@@ -155,7 +155,7 @@ ggplot(brexit, aes(x = opinion)) +
 `fct_infreq`: Reorder factors' levels by frequency
 
 
-```r
+``` r
 *ggplot(brexit, aes(x = fct_infreq(opinion))) +
   geom_bar()
 ```
@@ -170,13 +170,13 @@ ggplot(brexit, aes(x = opinion)) +
 .panelset[
 
 .panel[.panel-name[Plot]
-&lt;img src="11-effective-dataviz_files/figure-html/unnamed-chunk-9-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+&lt;img src="04-effective-dataviz_files/figure-html/unnamed-chunk-9-1.png" width="60%" style="display: block; margin: auto;" /&gt;
 ]
 
 .panel[.panel-name[Code]
 
 
-```r
+``` r
 ggplot(brexit, aes(x = opinion)) +
   geom_bar() +
 * labs(
@@ -195,13 +195,13 @@ ggplot(brexit, aes(x = opinion)) +
 .panelset[
 
 .panel[.panel-name[Plot]
-&lt;img src="11-effective-dataviz_files/figure-html/unnamed-chunk-10-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+&lt;img src="04-effective-dataviz_files/figure-html/unnamed-chunk-10-1.png" width="60%" style="display: block; margin: auto;" /&gt;
 ]
 
 .panel[.panel-name[Code]
 
 
-```r
+``` r
 ggplot(brexit, aes(x = region)) +
   geom_bar()
 ```
@@ -220,7 +220,7 @@ ggplot(brexit, aes(x = region)) +
 `fct_relevel`: Reorder factor levels using a custom order
 
 
-```r
+``` r
 brexit &lt;- brexit %&gt;%
   mutate(
 *   region = fct_relevel(
@@ -232,7 +232,7 @@ brexit &lt;- brexit %&gt;%
 ]
 
 .panel[.panel-name[Plot]
-&lt;img src="11-effective-dataviz_files/figure-html/unnamed-chunk-11-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+&lt;img src="04-effective-dataviz_files/figure-html/unnamed-chunk-11-1.png" width="60%" style="display: block; margin: auto;" /&gt;
 ]
 
 ]
@@ -248,7 +248,7 @@ brexit &lt;- brexit %&gt;%
 `fct_recode`: Change factor levels by hand
 
 
-```r
+``` r
 brexit &lt;- brexit %&gt;%
   mutate(
 *   region = fct_recode(
@@ -264,7 +264,7 @@ brexit &lt;- brexit %&gt;%
 ]
 
 .panel[.panel-name[Plot]
-&lt;img src="11-effective-dataviz_files/figure-html/recode-plot-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+&lt;img src="04-effective-dataviz_files/figure-html/recode-plot-1.png" width="60%" style="display: block; margin: auto;" /&gt;
 ]
 
 ]
@@ -279,7 +279,7 @@ class: middle
 
 ## Long categories can be hard to read
 
-&lt;img src="11-effective-dataviz_files/figure-html/unnamed-chunk-12-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+&lt;img src="04-effective-dataviz_files/figure-html/unnamed-chunk-12-1.png" width="60%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -288,13 +288,13 @@ class: middle
 .panelset[
 
 .panel[.panel-name[Plot]
-&lt;img src="11-effective-dataviz_files/figure-html/unnamed-chunk-13-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+&lt;img src="04-effective-dataviz_files/figure-html/unnamed-chunk-13-1.png" width="60%" style="display: block; margin: auto;" /&gt;
 ]
 
 .panel[.panel-name[Code]
 
 
-```r
+``` r
 *ggplot(brexit, aes(y = region)) +
   geom_bar()
 ```
@@ -309,7 +309,7 @@ class: middle
 .panelset[
 
 .panel[.panel-name[Plot]
-&lt;img src="11-effective-dataviz_files/figure-html/unnamed-chunk-14-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+&lt;img src="04-effective-dataviz_files/figure-html/unnamed-chunk-14-1.png" width="60%" style="display: block; margin: auto;" /&gt;
 ]
 
 .panel[.panel-name[Code]
@@ -317,7 +317,7 @@ class: middle
 `fct_rev`: Reverse order of factor levels
 
 
-```r
+``` r
 *ggplot(brexit, aes(y = fct_rev(region))) +
   geom_bar()
 ```
@@ -332,13 +332,13 @@ class: middle
 .panelset[
 
 .panel[.panel-name[Plot]
-&lt;img src="11-effective-dataviz_files/figure-html/unnamed-chunk-15-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+&lt;img src="04-effective-dataviz_files/figure-html/unnamed-chunk-15-1.png" width="60%" style="display: block; margin: auto;" /&gt;
 ]
 
 .panel[.panel-name[Code]
 
 
-```r
+``` r
 ggplot(brexit, aes(y = fct_rev(region))) +
   geom_bar() +
 * labs(
@@ -363,13 +363,13 @@ class: middle
 .panelset[
 
 .panel[.panel-name[Plot]
-&lt;img src="11-effective-dataviz_files/figure-html/unnamed-chunk-16-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+&lt;img src="04-effective-dataviz_files/figure-html/unnamed-chunk-16-1.png" width="60%" style="display: block; margin: auto;" /&gt;
 ]
 
 .panel[.panel-name[Code]
 
 
-```r
+``` r
 *ggplot(brexit, aes(y = region, fill = opinion)) +
   geom_bar()
 ```
@@ -384,13 +384,13 @@ class: middle
 .panelset[
 
 .panel[.panel-name[Plot]
-&lt;img src="11-effective-dataviz_files/figure-html/unnamed-chunk-17-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+&lt;img src="04-effective-dataviz_files/figure-html/unnamed-chunk-17-1.png" width="90%" style="display: block; margin: auto;" /&gt;
 ]
 
 .panel[.panel-name[Code]
 
 
-```r
+``` r
 ggplot(brexit, aes(y = opinion, fill = region)) +
   geom_bar() +
 * facet_wrap(~region, nrow = 1)
@@ -403,7 +403,7 @@ ggplot(brexit, aes(y = opinion, fill = region)) +
 
 ## Avoid redundancy?
 
-&lt;img src="11-effective-dataviz_files/figure-html/unnamed-chunk-18-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+&lt;img src="04-effective-dataviz_files/figure-html/unnamed-chunk-18-1.png" width="90%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -412,13 +412,13 @@ ggplot(brexit, aes(y = opinion, fill = region)) +
 .panelset[
 
 .panel[.panel-name[Plot]
-&lt;img src="11-effective-dataviz_files/figure-html/unnamed-chunk-19-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+&lt;img src="04-effective-dataviz_files/figure-html/unnamed-chunk-19-1.png" width="90%" style="display: block; margin: auto;" /&gt;
 ]
 
 .panel[.panel-name[Code]
 
 
-```r
+``` r
 ggplot(brexit, aes(y = opinion, fill = opinion)) +
   geom_bar() +
   facet_wrap(~region, nrow = 1)
@@ -434,13 +434,13 @@ ggplot(brexit, aes(y = opinion, fill = opinion)) +
 .panelset[
 
 .panel[.panel-name[Plot]
-&lt;img src="11-effective-dataviz_files/figure-html/unnamed-chunk-20-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+&lt;img src="04-effective-dataviz_files/figure-html/unnamed-chunk-20-1.png" width="90%" style="display: block; margin: auto;" /&gt;
 ]
 
 .panel[.panel-name[Code]
 
 
-```r
+``` r
 ggplot(brexit, aes(y = opinion, fill = opinion)) +
   geom_bar() +
   facet_wrap(~region, nrow = 1) +
@@ -457,13 +457,13 @@ ggplot(brexit, aes(y = opinion, fill = opinion)) +
 .panelset[
 
 .panel[.panel-name[Plot]
-&lt;img src="11-effective-dataviz_files/figure-html/unnamed-chunk-21-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+&lt;img src="04-effective-dataviz_files/figure-html/unnamed-chunk-21-1.png" width="90%" style="display: block; margin: auto;" /&gt;
 ]
 
 .panel[.panel-name[Code]
 
 
-```r
+``` r
 ggplot(brexit, aes(y = opinion, fill = opinion)) +
   geom_bar() +
   facet_wrap(~region, nrow = 1) +
@@ -484,13 +484,13 @@ ggplot(brexit, aes(y = opinion, fill = opinion)) +
 .panelset[
 
 .panel[.panel-name[Plot]
-&lt;img src="11-effective-dataviz_files/figure-html/unnamed-chunk-22-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+&lt;img src="04-effective-dataviz_files/figure-html/unnamed-chunk-22-1.png" width="90%" style="display: block; margin: auto;" /&gt;
 ]
 
 .panel[.panel-name[Code]
 
 
-```r
+``` r
 ggplot(brexit, aes(y = opinion, fill = opinion)) +
   geom_bar() +
   facet_wrap(~region, nrow = 1) +
@@ -513,13 +513,13 @@ ggplot(brexit, aes(y = opinion, fill = opinion)) +
 .panelset[
 
 .panel[.panel-name[Plot]
-&lt;img src="11-effective-dataviz_files/figure-html/unnamed-chunk-23-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+&lt;img src="04-effective-dataviz_files/figure-html/unnamed-chunk-23-1.png" width="90%" style="display: block; margin: auto;" /&gt;
 ]
 
 .panel[.panel-name[Code]
 
 
-```r
+``` r
 ggplot(brexit, aes(y = opinion, fill = opinion)) +
   geom_bar() +
   facet_wrap(~region, nrow = 1) +
@@ -542,13 +542,13 @@ ggplot(brexit, aes(y = opinion, fill = opinion)) +
 .panelset[
 
 .panel[.panel-name[Plot]
-&lt;img src="11-effective-dataviz_files/figure-html/unnamed-chunk-24-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+&lt;img src="04-effective-dataviz_files/figure-html/unnamed-chunk-24-1.png" width="90%" style="display: block; margin: auto;" /&gt;
 ]
 
 .panel[.panel-name[Code]
 
 
-```r
+``` r
 ggplot(brexit, aes(y = opinion, fill = opinion)) +
   geom_bar() +
   facet_wrap(~region,
@@ -577,7 +577,7 @@ class: middle
 
 ## Rainbow colors not always the right choice
 
-&lt;img src="11-effective-dataviz_files/figure-html/unnamed-chunk-25-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+&lt;img src="04-effective-dataviz_files/figure-html/unnamed-chunk-25-1.png" width="90%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -586,13 +586,13 @@ class: middle
 .panelset[
 
 .panel[.panel-name[Plot]
-&lt;img src="11-effective-dataviz_files/figure-html/unnamed-chunk-26-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+&lt;img src="04-effective-dataviz_files/figure-html/unnamed-chunk-26-1.png" width="90%" style="display: block; margin: auto;" /&gt;
 ]
 
 .panel[.panel-name[Code]
 
 
-```r
+``` r
 ggplot(brexit, aes(y = opinion, fill = opinion)) +
   geom_bar() +
   facet_wrap(~region, nrow = 1, labeller = label_wrap_gen(width = 12)) +
@@ -628,13 +628,13 @@ ggplot(brexit, aes(y = opinion, fill = opinion)) +
 .panelset[
 
 .panel[.panel-name[Plot]
-&lt;img src="11-effective-dataviz_files/figure-html/unnamed-chunk-28-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+&lt;img src="04-effective-dataviz_files/figure-html/unnamed-chunk-28-1.png" width="90%" style="display: block; margin: auto;" /&gt;
 ]
 
 .panel[.panel-name[Code]
 
 
-```r
+``` r
 ggplot(brexit, aes(y = opinion, fill = opinion)) +
   geom_bar() +
   facet_wrap(~region, nrow = 1, labeller = label_wrap_gen(width = 12)) +
@@ -660,13 +660,13 @@ ggplot(brexit, aes(y = opinion, fill = opinion)) +
 .panelset[
 
 .panel[.panel-name[Plot]
-&lt;img src="11-effective-dataviz_files/figure-html/unnamed-chunk-29-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+&lt;img src="04-effective-dataviz_files/figure-html/unnamed-chunk-29-1.png" width="90%" style="display: block; margin: auto;" /&gt;
 ]
 
 .panel[.panel-name[Code]
 
 
-```r
+``` r
 ggplot(brexit, aes(y = opinion, fill = opinion)) +
   geom_bar() +
   facet_wrap(~region, nrow = 1, labeller = label_wrap_gen(width = 12)) +

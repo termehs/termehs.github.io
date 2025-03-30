@@ -4,11 +4,11 @@
     <title>Grammar of Data Wrangling I</title>
     <meta charset="utf-8" />
     <meta name="author" content=" Termeh Shafie" />
-    <script src="04-grammar-wrangle-single-df_files/header-attrs/header-attrs.js"></script>
-    <link href="04-grammar-wrangle-single-df_files/font-awesome/css/all.min.css" rel="stylesheet" />
-    <link href="04-grammar-wrangle-single-df_files/font-awesome/css/v4-shims.min.css" rel="stylesheet" />
-    <link href="04-grammar-wrangle-single-df_files/panelset/panelset.css" rel="stylesheet" />
-    <script src="04-grammar-wrangle-single-df_files/panelset/panelset.js"></script>
+    <script src="05-grammar-wrangle-single-df_files/header-attrs/header-attrs.js"></script>
+    <link href="05-grammar-wrangle-single-df_files/font-awesome/css/all.min.css" rel="stylesheet" />
+    <link href="05-grammar-wrangle-single-df_files/font-awesome/css/v4-shims.min.css" rel="stylesheet" />
+    <link href="05-grammar-wrangle-single-df_files/panelset/panelset.css" rel="stylesheet" />
+    <script src="05-grammar-wrangle-single-df_files/panelset/panelset.js"></script>
     <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
     <link rel="stylesheet" href="slides.css" type="text/css" />
   </head>
@@ -144,14 +144,14 @@ Source: [US Census Fact Finder, General Economic Characteristics, ACS 2017](http
 
 .pull-left[
 
-```r
+``` r
 starwars %&gt;%
   select(name, height, mass)
 ```
 ]
 .pull-right[
 
-```r
+``` r
 starwars %&gt;%
   group_by(gender) %&gt;%
   summarize(
@@ -211,7 +211,7 @@ class: middle
 - Goal for original data collection: Development of prediction models to classify a hotel booking's likelihood to be cancelled ([Antonia et al., 2019](https://www.sciencedirect.com/science/article/pii/S2352340918315191#bib5))
 
 
-```r
+``` r
 hotels &lt;- read_csv("data/hotels.csv")
 ```
 
@@ -224,7 +224,7 @@ Source: [TidyTuesday](https://github.com/rfordatascience/tidytuesday/blob/master
 ## First look: Variables
 
 
-```r
+``` r
 names(hotels)
 ```
 
@@ -255,7 +255,7 @@ names(hotels)
 ## Second look: Overview
 
 
-```r
+``` r
 glimpse(hotels)
 ```
 
@@ -288,7 +288,7 @@ glimpse(hotels)
 View only `lead_time` (number of days between booking and arrival date):
 
 
-```r
+``` r
 select(hotels, lead_time)
 ```
 
@@ -311,7 +311,7 @@ select(hotels, lead_time)
 
 .pull-left[
 
-```r
+``` r
 *select(
   hotels, 
   lead_time
@@ -328,7 +328,7 @@ select(hotels, lead_time)
 
 .pull-left[
 
-```r
+``` r
 select( 
 * hotels,
   lead_time
@@ -346,7 +346,7 @@ select(
 
 .pull-left[
 
-```r
+``` r
 select( 
   hotels, 
 * lead_time
@@ -365,7 +365,7 @@ select(
 
 .pull-left[
 
-```r
+``` r
 select( 
   hotels, 
   lead_time
@@ -399,7 +399,7 @@ dplyr functions always expect a data frame and always yield a data frame.
 ]
 
 
-```r
+``` r
 select(hotels, lead_time)
 ```
 
@@ -427,7 +427,7 @@ View only the `hotel` type and `lead_time`:
 
 .pull-left[
 
-```r
+``` r
 select(hotels, hotel, lead_time)
 ```
 
@@ -458,7 +458,7 @@ What if we wanted to select these columns, and then arrange the data in descendi
 .pull-left[
 Select:
 
-```r
+``` r
 hotels %&gt;%
   select(hotel, lead_time)
 ```
@@ -481,7 +481,7 @@ hotels %&gt;%
 .pull-right[
 Select, then arrange:
 
-```r
+``` r
 hotels %&gt;%
   select(hotel, lead_time) %&gt;%
   arrange(desc(lead_time))
@@ -521,7 +521,7 @@ In programming, a pipe is a technique for passing information from one process t
 .pull-right[
 .small[
 
-```r
+``` r
 *hotels %&gt;%
   select(hotel, lead_time) %&gt;%
   arrange(desc(lead_time))
@@ -555,7 +555,7 @@ In programming, a pipe is a technique for passing information from one process t
 .pull-right[
 .small[
 
-```r
+``` r
 hotels %&gt;%
 * select(hotel, lead_time) %&gt;%
   arrange(desc(lead_time))
@@ -590,7 +590,7 @@ In programming, a pipe is a technique for passing information from one process t
 .pull-right[
 .small[
 
-```r
+``` r
 hotels %&gt;%
   select(hotel, lead_time) %&gt;% 
 * arrange(desc(lead_time))
@@ -642,7 +642,7 @@ unlock car, start car, drive to work, park.
 --
 - Expressed as a set of nested functions in R pseudocode this would look like:
 
-```r
+``` r
 park(drive(start_car(find("keys")), to = "work"))
 ```
 
@@ -650,7 +650,7 @@ park(drive(start_car(find("keys")), to = "work"))
 - Writing it out using pipes give it a more natural (and easier to read) 
 structure:
 
-```r
+``` r
 find("keys") %&gt;%
   start_car() %&gt;%
   drive(to = "work") %&gt;%
@@ -674,19 +674,19 @@ find("keys") %&gt;%
 ❌
 
 
-```r
+``` r
 hotels +
   select(hotel, lead_time)
 ```
 
 ```
-## Error in eval(expr, envir, enclos): object 'hotel' not found
+## Error: object 'hotel' not found
 ```
 
 ✅
 
 
-```r
+``` r
 hotels %&gt;%
   select(hotel, lead_time)
 ```
@@ -711,7 +711,7 @@ hotels %&gt;%
 ❌
 
 
-```r
+``` r
 ggplot(hotels, aes(x = hotel, fill = deposit_type)) %&gt;%
   geom_bar()
 ```
@@ -725,12 +725,12 @@ ggplot(hotels, aes(x = hotel, fill = deposit_type)) %&gt;%
 ✅
 
 
-```r
+``` r
 ggplot(hotels, aes(x = hotel, fill = deposit_type)) +
   geom_bar()
 ```
 
-&lt;img src="04-grammar-wrangle-single-df_files/figure-html/unnamed-chunk-27-1.png" width="25%" style="display: block; margin: auto;" /&gt;
+&lt;img src="05-grammar-wrangle-single-df_files/figure-html/unnamed-chunk-27-1.png" width="25%" style="display: block; margin: auto;" /&gt;
 ]
 
 ---
@@ -745,14 +745,14 @@ Many of the styling principles are consistent across `%&gt;%` and `+`:
 ❌
 
 
-```r
+``` r
 ggplot(hotels,aes(x=hotel,y=deposit_type))+geom_bar()
 ```
 
 ✅
 
 
-```r
+``` r
 ggplot(hotels, aes(x = hotel, y = deposit_type)) + 
   geom_bar()
 ```
@@ -780,7 +780,7 @@ class: middle
 - Observations: Each row represents a hotel booking
 
 
-```r
+``` r
 hotels &lt;- read_csv("data/hotels.csv")
 ```
 
@@ -795,7 +795,7 @@ class: middle
 ## `select` to keep variables
 
 
-```r
+``` r
 hotels %&gt;%
 * select(hotel, lead_time)
 ```
@@ -823,7 +823,7 @@ hotels %&gt;%
 
 .small[
 
-```r
+``` r
 hotels %&gt;%
 * select(-agent)
 ```
@@ -856,7 +856,7 @@ hotels %&gt;%
 ## `select` a range of variables
 
 
-```r
+``` r
 hotels %&gt;%
 * select(hotel:arrival_date_month)
 ```
@@ -884,7 +884,7 @@ hotels %&gt;%
 ## `select` variables with certain characteristics
 
 
-```r
+``` r
 hotels %&gt;%
 * select(starts_with("arrival"))
 ```
@@ -912,7 +912,7 @@ hotels %&gt;%
 ## `select` variables with certain characteristics
 
 
-```r
+``` r
 hotels %&gt;%
 * select(ends_with("type"))
 ```
@@ -958,7 +958,7 @@ See help for any of these functions for more info, e.g. `?everything`.
 
 .pull-left[
 
-```r
+``` r
 hotels %&gt;%
   select(adults, children, babies) %&gt;%
 * arrange(babies)
@@ -983,7 +983,7 @@ hotels %&gt;%
 ]
 .pull-right[
 
-```r
+``` r
 hotels %&gt;%
   select(adults, children, babies) %&gt;%
 * arrange(desc(babies))
@@ -1013,7 +1013,7 @@ hotels %&gt;%
 
 .midi[
 
-```r
+``` r
 # first five
 hotels %&gt;%
 * slice(1:5)
@@ -1049,7 +1049,7 @@ certain lines of code while debugging.
 
 .small[
 
-```r
+``` r
 hotels %&gt;%
   # slice the first five rows  # this line is a comment
   #select(hotel) %&gt;%           # this one doesn't run
@@ -1083,7 +1083,7 @@ class: middle
 
 .midi[
 
-```r
+``` r
 # bookings in City Hotels
 hotels %&gt;%
 * filter(hotel == "City Hotel")
@@ -1116,7 +1116,7 @@ hotels %&gt;%
 ## `filter` for many conditions at once
 
 
-```r
+``` r
 hotels %&gt;%
   filter( 
 *   adults == 0,
@@ -1147,7 +1147,7 @@ hotels %&gt;%
 ## `filter` for more complex conditions
 
 
-```r
+``` r
 # bookings with no adults and some children or babies in the room
 hotels %&gt;%
   filter( 
@@ -1209,7 +1209,7 @@ class: middle
 .small[
 .pull-left[
 
-```r
+``` r
 hotels %&gt;% 
 * distinct(market_segment) %&gt;%
   arrange(market_segment)
@@ -1231,7 +1231,7 @@ hotels %&gt;%
 ]
 .pull-right[
 
-```r
+``` r
 hotels %&gt;% 
 * distinct(hotel, market_segment) %&gt;%
   arrange(hotel, market_segment)
@@ -1262,7 +1262,7 @@ hotels %&gt;%
 
 .pull-left[
 
-```r
+``` r
 # alphabetical order by default
 hotels %&gt;%
 * count(market_segment)
@@ -1285,7 +1285,7 @@ hotels %&gt;%
 --
 .pull-right[
 
-```r
+``` r
 # descending frequency order
 hotels %&gt;%
 * count(market_segment, sort = TRUE)
@@ -1312,7 +1312,7 @@ hotels %&gt;%
 
 .pull-left[
 
-```r
+``` r
 # ascending frequency order
 hotels %&gt;%
   count(market_segment) %&gt;%
@@ -1335,7 +1335,7 @@ hotels %&gt;%
 ]
 .pull-right[
 
-```r
+``` r
 # descending frequency order
 # just like adding sort = TRUE
 hotels %&gt;%
@@ -1363,7 +1363,7 @@ hotels %&gt;%
 ## `count` for multiple variables
 
 
-```r
+``` r
 hotels %&gt;%
 * count(hotel, market_segment)
 ```
@@ -1395,7 +1395,7 @@ hotels %&gt;%
 .midi[
 .pull-left[
 
-```r
+``` r
 # hotel type first
 hotels %&gt;%
 * count(hotel, market_segment)
@@ -1423,7 +1423,7 @@ hotels %&gt;%
 ]
 .pull-right[
 
-```r
+``` r
 # market segment first
 hotels %&gt;%
 * count(market_segment, hotel)
@@ -1462,7 +1462,7 @@ class: middle
 ## `mutate` to add a new variable
 
 
-```r
+``` r
 hotels %&gt;%
 * mutate(little_ones = children + babies) %&gt;%
   select(children, babies, little_ones) %&gt;%
@@ -1493,7 +1493,7 @@ hotels %&gt;%
 .midi[
 .pull-left[
 
-```r
+``` r
 # Resort Hotel
 hotels %&gt;%
   mutate(little_ones = children + babies) %&gt;%
@@ -1523,7 +1523,7 @@ hotels %&gt;%
 ]
 .pull-right[
 
-```r
+``` r
 # City Hotel
 hotels %&gt;%
   mutate(little_ones = children + babies) %&gt;%
@@ -1561,7 +1561,7 @@ What is happening in the following chunk?
 
 .midi[
 
-```r
+``` r
 hotels %&gt;%
   mutate(little_ones = children + babies) %&gt;%
   count(hotel, little_ones) %&gt;%
@@ -1598,7 +1598,7 @@ class: middle
 ## `summarise` for summary stats
 
 
-```r
+``` r
 # mean average daily rate for all bookings
 hotels %&gt;%
 * summarise(mean_adr = mean(adr))
@@ -1631,7 +1631,7 @@ column, but that's not recommended!
 ❌
 
 
-```r
+``` r
 hotels %&gt;%
   summarise(mean(adr))
 ```
@@ -1647,7 +1647,7 @@ hotels %&gt;%
 ✅
 
 
-```r
+``` r
 hotels %&gt;%
   summarise(mean_adr = mean(adr))
 ```
@@ -1665,7 +1665,7 @@ hotels %&gt;%
 ## `group_by` for grouped operations
 
 
-```r
+``` r
 # mean average daily rate for all booking at city and resort hotels
 hotels %&gt;%
 * group_by(hotel) %&gt;%
@@ -1688,7 +1688,7 @@ The following two give the same result, so `count` is simply short for `group_by
 
 .pull-left[
 
-```r
+``` r
 hotels %&gt;%
   group_by(hotel) %&gt;%
   summarise(n = n())
@@ -1704,7 +1704,7 @@ hotels %&gt;%
 ]
 .pull-right[
 
-```r
+``` r
 hotels %&gt;%
   count(hotel)
 ```
@@ -1725,7 +1725,7 @@ hotels %&gt;%
 `summarise` can be used for multiple summary statistics as well
 
 
-```r
+``` r
 hotels %&gt;%
   summarise(
     min_adr = min(adr),

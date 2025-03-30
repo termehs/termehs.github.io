@@ -4,11 +4,11 @@
     <title>Importing and Recoding Data</title>
     <meta charset="utf-8" />
     <meta name="author" content=" Termeh Shafie" />
-    <script src="08-data-import-recode_files/header-attrs/header-attrs.js"></script>
-    <link href="08-data-import-recode_files/font-awesome/css/all.min.css" rel="stylesheet" />
-    <link href="08-data-import-recode_files/font-awesome/css/v4-shims.min.css" rel="stylesheet" />
-    <link href="08-data-import-recode_files/panelset/panelset.css" rel="stylesheet" />
-    <script src="08-data-import-recode_files/panelset/panelset.js"></script>
+    <script src="09-data-import-recode_files/header-attrs/header-attrs.js"></script>
+    <link href="09-data-import-recode_files/font-awesome/css/all.min.css" rel="stylesheet" />
+    <link href="09-data-import-recode_files/font-awesome/css/v4-shims.min.css" rel="stylesheet" />
+    <link href="09-data-import-recode_files/panelset/panelset.css" rel="stylesheet" />
+    <script src="09-data-import-recode_files/panelset/panelset.js"></script>
     <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
     <link rel="stylesheet" href="slides.css" type="text/css" />
   </head>
@@ -77,7 +77,7 @@ class: middle
 ## Reading data
 
 
-```r
+``` r
 nobel &lt;- read_csv(file = "data/nobel.csv")
 nobel
 ```
@@ -109,7 +109,7 @@ nobel
 - Write a file
 
 
-```r
+``` r
 df &lt;- tribble(
   ~x, ~y,
   1,  "a",
@@ -126,7 +126,7 @@ write_csv(df, file = "data/df.csv")
 - Read it back in to inspect
 
 
-```r
+``` r
 read_csv("data/df.csv")
 ```
 
@@ -169,7 +169,7 @@ class: middle
 ## Data with bad names
 
 
-```r
+``` r
 edibnb_badnames &lt;- read_csv("data/edibnb-badnames.csv")
 names(edibnb_badnames)
 ```
@@ -187,13 +187,13 @@ names(edibnb_badnames)
 ... but R doesn't allow spaces in variable names
 
 
-```r
+``` r
 ggplot(edibnb_badnames, aes(x = Number of bathrooms, y = Price)) +
   geom_point()
 ```
 
 ```
-## Error: &lt;text&gt;:1:40: unexpected symbol
+## Error in parse(text = input): &lt;text&gt;:1:40: unexpected symbol
 ## 1: ggplot(edibnb_badnames, aes(x = Number of
 ##                                            ^
 ```
@@ -205,7 +205,7 @@ ggplot(edibnb_badnames, aes(x = Number of bathrooms, y = Price)) +
 
 .small[
 
-```r
+``` r
 edibnb_col_names &lt;- read_csv("data/edibnb-badnames.csv",
                              col_names = c("id", "price", 
                                            "neighbourhood", "accommodates",
@@ -230,7 +230,7 @@ names(edibnb_col_names)
 ## Option 2 - Format text to snake_case
 
 
-```r
+``` r
 edibnb_clean_names &lt;- read_csv("data/edibnb-badnames.csv") %&gt;%
   janitor::clean_names()
 
@@ -262,7 +262,7 @@ Which type is `x`? Why?
 ]
 .pull-right[
 
-```r
+``` r
 read_csv("data/df-na.csv")
 ```
 
@@ -288,7 +288,7 @@ read_csv("data/df-na.csv")
 ## Option 1. Explicit NAs
 
 
-```r
+``` r
 read_csv("data/df-na.csv", 
          na = c("", "NA", ".", "9999", "Not applicable"))
 ```
@@ -319,7 +319,7 @@ read_csv("data/df-na.csv",
 ## Option 2. Specify column types
 
 
-```r
+``` r
 read_csv("data/df-na.csv", col_types = list(col_double(), 
                                             col_character(), 
                                             col_character()))
@@ -376,7 +376,7 @@ Wondering where you remember these from?
 ]
 
 
-```r
+``` r
 read_csv("data/df-na.csv")
 ```
 
@@ -416,7 +416,7 @@ class:middle
 --
 
 
-```r
+``` r
 *fav_food &lt;- read_excel("data/favourite-food.xlsx")
 
 fav_food
@@ -442,7 +442,7 @@ fav_food
 --
 
 
-```r
+``` r
 fav_food &lt;- read_excel("data/favourite-food.xlsx") %&gt;%
 * janitor::clean_names()
 
@@ -469,7 +469,7 @@ fav_food
 --
 
 
-```r
+``` r
 fav_food &lt;- read_excel("data/favourite-food.xlsx",
 *                      na = c("N/A", "99999")) %&gt;%
   janitor::clean_names()
@@ -494,7 +494,7 @@ fav_food
 
 .pull-left-wide[
 
-```r
+``` r
 fav_food &lt;- fav_food %&gt;%
 * mutate(
 *   age = if_else(age == "five", "5", age),
@@ -529,7 +529,7 @@ What order are the levels of `ses` listed in?
 
 .pull-left-wide[
 
-```r
+``` r
 fav_food %&gt;%
   count(ses)
 ```
@@ -553,7 +553,7 @@ fav_food %&gt;%
 
 .pull-left-wide[
 
-```r
+``` r
 fav_food &lt;- fav_food %&gt;%
 * mutate(ses = fct_relevel(ses, "Low", "Middle", "High"))
 
@@ -576,7 +576,7 @@ fav_food %&gt;%
 ## Putting it altogether
 
 
-```r
+``` r
 fav_food &lt;- read_excel("data/favourite-food.xlsx", na = c("N/A", "99999")) %&gt;%
   janitor::clean_names() %&gt;%
   mutate(
@@ -604,7 +604,7 @@ fav_food
 ## Out and back in
 
 
-```r
+``` r
 write_csv(fav_food, file = "data/fav-food-clean.csv")
 
 fav_food_clean &lt;- read_csv("data/fav-food-clean.csv")
@@ -617,7 +617,7 @@ What happened to `ses` again?
 ]
 
 
-```r
+``` r
 fav_food_clean %&gt;%
   count(ses)
 ```
@@ -639,7 +639,7 @@ fav_food_clean %&gt;%
 - An alternative is RDS files, you can read and write them with `read_rds()` and `write_rds()`, respectively.
 
 
-```r
+``` r
 read_rds(path)
 write_rds(x, path)
 ```
@@ -649,7 +649,7 @@ write_rds(x, path)
 ## Out and back in, take 2
 
 
-```r
+``` r
 write_rds(fav_food, file = "data/fav-food-clean.rds")
 
 fav_food_clean &lt;- read_rds("data/fav-food-clean.rds")
@@ -746,7 +746,7 @@ Source: [pewforum.org/religious-landscape-study/income-distribution](https://www
 ## Read data 
 
 
-```r
+``` r
 library(readxl)
 rel_inc &lt;- read_excel("data/relig-income.xlsx")
 ```
@@ -775,7 +775,7 @@ rel_inc &lt;- read_excel("data/relig-income.xlsx")
 
 .midi[
 
-```r
+``` r
 rel_inc %&gt;%
   rename( 
     religion = `Religious tradition`, 
@@ -834,7 +834,7 @@ If we want a new variable called `income` with levels such as "Less than $30,000
 
 .midi[
 
-```r
+``` r
 rel_inc %&gt;%
   rename(
     religion = `Religious tradition`,
@@ -867,7 +867,7 @@ rel_inc %&gt;%
 
 .midi[
 
-```r
+``` r
 rel_inc %&gt;%
   rename(
     religion = `Religious tradition`,
@@ -900,7 +900,7 @@ rel_inc %&gt;%
 ## Save data
 
 
-```r
+``` r
 rel_inc_long &lt;- rel_inc %&gt;% 
   rename(
     religion = `Religious tradition`,
@@ -919,12 +919,12 @@ rel_inc_long &lt;- rel_inc %&gt;%
 ## Barplot
 
 
-```r
+``` r
 ggplot(rel_inc_long, aes(y = religion, x = frequency)) +
   geom_col()
 ```
 
-&lt;img src="08-data-import-recode_files/figure-html/unnamed-chunk-46-1.png" width="65%" style="display: block; margin: auto;" /&gt;
+&lt;img src="09-data-import-recode_files/figure-html/unnamed-chunk-46-1.png" width="65%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -934,7 +934,7 @@ ggplot(rel_inc_long, aes(y = religion, x = frequency)) +
 
 .panel[.panel-name[Recode]
 
-```r
+``` r
 rel_inc_long &lt;- rel_inc_long %&gt;%
   mutate(religion = case_when(
     religion == "Evangelical Protestant"           ~ "Ev. Protestant",
@@ -946,7 +946,7 @@ rel_inc_long &lt;- rel_inc_long %&gt;%
 ]
 
 .panel[.panel-name[Plot]
-&lt;img src="08-data-import-recode_files/figure-html/unnamed-chunk-48-1.png" width="65%" style="display: block; margin: auto;" /&gt;
+&lt;img src="09-data-import-recode_files/figure-html/unnamed-chunk-48-1.png" width="65%" style="display: block; margin: auto;" /&gt;
 ]
 
 ]
@@ -959,14 +959,14 @@ rel_inc_long &lt;- rel_inc_long %&gt;%
 
 .panel[.panel-name[Recode]
 
-```r
+``` r
 rel_inc_long &lt;- rel_inc_long %&gt;%
   mutate(religion = fct_rev(religion)) 
 ```
 ]
 
 .panel[.panel-name[Plot]
-&lt;img src="08-data-import-recode_files/figure-html/unnamed-chunk-50-1.png" width="65%" style="display: block; margin: auto;" /&gt;
+&lt;img src="09-data-import-recode_files/figure-html/unnamed-chunk-50-1.png" width="65%" style="display: block; margin: auto;" /&gt;
 ]
 
 ]
@@ -978,12 +978,12 @@ rel_inc_long &lt;- rel_inc_long %&gt;%
 .panelset[
 
 .panel[.panel-name[Plot]
-&lt;img src="08-data-import-recode_files/figure-html/rel-income-1.png" width="65%" style="display: block; margin: auto;" /&gt;
+&lt;img src="09-data-import-recode_files/figure-html/rel-income-1.png" width="65%" style="display: block; margin: auto;" /&gt;
 ]
 
 .panel[.panel-name[Code]
 
-```r
+``` r
 ggplot(rel_inc_long, aes(y = religion, x = frequency, fill = income)) + 
   geom_col() 
 ```
@@ -998,12 +998,12 @@ ggplot(rel_inc_long, aes(y = religion, x = frequency, fill = income)) +
 .panelset[
 
 .panel[.panel-name[Plot]
-&lt;img src="08-data-import-recode_files/figure-html/rel-income-fill-1.png" width="65%" style="display: block; margin: auto;" /&gt;
+&lt;img src="09-data-import-recode_files/figure-html/rel-income-fill-1.png" width="65%" style="display: block; margin: auto;" /&gt;
 ]
 
 .panel[.panel-name[Code]
 
-```r
+``` r
 ggplot(rel_inc_long, aes(y = religion, x = frequency, fill = income)) +
   geom_col(position = "fill")
 ```
@@ -1018,12 +1018,12 @@ ggplot(rel_inc_long, aes(y = religion, x = frequency, fill = income)) +
 .panelset[
 
 .panel[.panel-name[Plot]
-&lt;img src="08-data-import-recode_files/figure-html/rel-income-fill-viridis-1.png" width="65%" style="display: block; margin: auto;" /&gt;
+&lt;img src="09-data-import-recode_files/figure-html/rel-income-fill-viridis-1.png" width="65%" style="display: block; margin: auto;" /&gt;
 ]
 
 .panel[.panel-name[Code]
 
-```r
+``` r
 ggplot(rel_inc_long, aes(y = religion, x = frequency, fill = income)) +
   geom_col(position = "fill") +
   scale_fill_viridis_d()
@@ -1040,12 +1040,12 @@ ggplot(rel_inc_long, aes(y = religion, x = frequency, fill = income)) +
 .panelset[
 
 .panel[.panel-name[Plot]
-&lt;img src="08-data-import-recode_files/figure-html/rel-income-fill-viridis-minimal-1.png" width="65%" style="display: block; margin: auto;" /&gt;
+&lt;img src="09-data-import-recode_files/figure-html/rel-income-fill-viridis-minimal-1.png" width="65%" style="display: block; margin: auto;" /&gt;
 ]
 
 .panel[.panel-name[Code]
 
-```r
+``` r
 ggplot(rel_inc_long, aes(y = religion, x = frequency, fill = income)) +
   geom_col(position = "fill") +
   scale_fill_viridis_d() +
@@ -1062,12 +1062,12 @@ ggplot(rel_inc_long, aes(y = religion, x = frequency, fill = income)) +
 .panelset[
 
 .panel[.panel-name[Plot]
-&lt;img src="08-data-import-recode_files/figure-html/bottom-legend-1.png" width="65%" style="display: block; margin: auto;" /&gt;
+&lt;img src="09-data-import-recode_files/figure-html/bottom-legend-1.png" width="65%" style="display: block; margin: auto;" /&gt;
 ]
 
 .panel[.panel-name[Code]
 
-```r
+``` r
 ggplot(rel_inc_long, aes(y = religion, x = frequency, fill = income)) +
   geom_col(position = "fill") +
   scale_fill_viridis_d() +
@@ -1085,12 +1085,12 @@ ggplot(rel_inc_long, aes(y = religion, x = frequency, fill = income)) +
 .panelset[
 
 .panel[.panel-name[Plot]
-&lt;img src="08-data-import-recode_files/figure-html/unnamed-chunk-56-1.png" width="65%" style="display: block; margin: auto;" /&gt;
+&lt;img src="09-data-import-recode_files/figure-html/unnamed-chunk-56-1.png" width="65%" style="display: block; margin: auto;" /&gt;
 ]
 
 .panel[.panel-name[Code]
 
-```r
+``` r
 ggplot(rel_inc_long, aes(y = religion, x = frequency, fill = income)) +
   geom_col(position = "fill") +
   scale_fill_viridis_d() +
@@ -1109,12 +1109,12 @@ ggplot(rel_inc_long, aes(y = religion, x = frequency, fill = income)) +
 .panelset[
 
 .panel[.panel-name[Plot]
-&lt;img src="08-data-import-recode_files/figure-html/unnamed-chunk-57-1.png" width="65%" style="display: block; margin: auto;" /&gt;
+&lt;img src="09-data-import-recode_files/figure-html/unnamed-chunk-57-1.png" width="65%" style="display: block; margin: auto;" /&gt;
 ]
 
 .panel[.panel-name[Code]
 
-```r
+``` r
 ggplot(rel_inc_long, aes(y = religion, x = frequency, fill = income)) +
   geom_col(position = "fill") +
   scale_fill_viridis_d() +

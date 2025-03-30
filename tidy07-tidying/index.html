@@ -4,11 +4,11 @@
     <title>Tidying Data</title>
     <meta charset="utf-8" />
     <meta name="author" content=" Termeh Shafie" />
-    <script src="06-tidying_files/header-attrs/header-attrs.js"></script>
-    <link href="06-tidying_files/font-awesome/css/all.min.css" rel="stylesheet" />
-    <link href="06-tidying_files/font-awesome/css/v4-shims.min.css" rel="stylesheet" />
-    <link href="06-tidying_files/panelset/panelset.css" rel="stylesheet" />
-    <script src="06-tidying_files/panelset/panelset.js"></script>
+    <script src="07-tidying_files/header-attrs/header-attrs.js"></script>
+    <link href="07-tidying_files/font-awesome/css/all.min.css" rel="stylesheet" />
+    <link href="07-tidying_files/font-awesome/css/v4-shims.min.css" rel="stylesheet" />
+    <link href="07-tidying_files/panelset/panelset.css" rel="stylesheet" />
+    <script src="07-tidying_files/panelset/panelset.js"></script>
     <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
     <link rel="stylesheet" href="slides.css" type="text/css" />
   </head>
@@ -162,7 +162,7 @@ more rows
 ]
 .pull-right[
 
-```r
+``` r
 pivot_longer(
 * data,
   cols, 
@@ -182,7 +182,7 @@ pivot_longer(
 ]
 .pull-right[
 
-```r
+``` r
 pivot_longer(
   data, 
 * cols,
@@ -203,7 +203,7 @@ pivot_longer(
 ]
 .pull-right[
 
-```r
+``` r
 pivot_longer(
   data, 
   cols, 
@@ -225,7 +225,7 @@ pivot_longer(
 ]
 .pull-right[
 
-```r
+``` r
 pivot_longer(
   data, 
   cols, 
@@ -240,7 +240,7 @@ pivot_longer(
 ## Customers `\(\rightarrow\)` purchases
 
 
-```r
+``` r
 purchases &lt;- customers %&gt;%
 * pivot_longer(
 *   cols = item_1:item_3,  # variables item_1 to item_3
@@ -273,7 +273,7 @@ Most likely, because the next step of your analysis needs it
 
 .pull-left[
 
-```r
+``` r
 prices
 ```
 
@@ -290,7 +290,7 @@ prices
 ]
 .pull-right[
 
-```r
+``` r
 purchases %&gt;%
 * left_join(prices)
 ```
@@ -319,7 +319,7 @@ purchases %&gt;%
 ]
 .pull-right-wide[
 
-```r
+``` r
 purchases %&gt;%
 * pivot_wider(
 *   names_from = item_no,
@@ -357,7 +357,7 @@ Source: [FiveThirtyEight](https://projects.fivethirtyeight.com/trump-approval-ra
 
 
 
-```r
+``` r
 trump
 ```
 
@@ -383,7 +383,7 @@ trump
 ## Goal
 
 .pull-left-wide[
-&lt;img src="06-tidying_files/figure-html/unnamed-chunk-20-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="07-tidying_files/figure-html/unnamed-chunk-20-1.png" width="100%" style="display: block; margin: auto;" /&gt;
 ]
 --
 .pull-right-narrow[
@@ -401,7 +401,7 @@ trump
 ## Pivot
 
 
-```r
+``` r
 trump_longer &lt;- trump %&gt;%
   pivot_longer(
     cols = c(approval, disapproval),
@@ -432,14 +432,14 @@ trump_longer
 ## Plot
 
 
-```r
+``` r
 ggplot(trump_longer, 
        aes(x = date, y = rating_value, color = rating_type, group = rating_type)) +
   geom_line() +
   facet_wrap(~ subgroup)
 ```
 
-&lt;img src="06-tidying_files/figure-html/unnamed-chunk-22-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+&lt;img src="07-tidying_files/figure-html/unnamed-chunk-22-1.png" width="60%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -447,7 +447,7 @@ ggplot(trump_longer,
 
 .panel[.panel-name[Code]
 
-```r
+``` r
 ggplot(trump_longer, 
        aes(x = date, y = rating_value, 
            color = rating_type, group = rating_type)) +
@@ -465,7 +465,7 @@ ggplot(trump_longer,
 ]
 
 .panel[.panel-name[Plot]
-&lt;img src="06-tidying_files/figure-html/unnamed-chunk-23-1.png" width="75%" style="display: block; margin: auto;" /&gt;
+&lt;img src="07-tidying_files/figure-html/unnamed-chunk-23-1.png" width="75%" style="display: block; margin: auto;" /&gt;
 ]
 
 ]
@@ -476,7 +476,7 @@ ggplot(trump_longer,
 
 .panel[.panel-name[Code]
 
-```r
+``` r
 ggplot(trump_longer, 
        aes(x = date, y = rating_value, 
            color = rating_type, group = rating_type)) +
@@ -496,7 +496,7 @@ ggplot(trump_longer,
 ]
 
 .panel[.panel-name[Plot]
-&lt;img src="06-tidying_files/figure-html/unnamed-chunk-24-1.png" width="75%" style="display: block; margin: auto;" /&gt;
+&lt;img src="07-tidying_files/figure-html/unnamed-chunk-24-1.png" width="75%" style="display: block; margin: auto;" /&gt;
 ]
 
 ]
