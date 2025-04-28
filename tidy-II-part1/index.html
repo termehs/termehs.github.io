@@ -2751,6 +2751,19 @@ Brier_{class} = \frac{1}{N}\sum_{i=1}^N\sum_{k=1}^C (y_{ik} - \hat{p}_{ik})^2
 <span id="cb52-15"><a href=""></a><span class="co">#&gt;  9 &lt;split [4263/1422]&gt; Resample09</span></span>
 <span id="cb52-16"><a href=""></a><span class="co">#&gt; 10 &lt;split [4263/1422]&gt; Resample10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<aside class="notes">
+<p>Repeated random sub-sampling validation: random train/test splits repeated many times. You have a lot of data and k-fold is too slow) You control: How much of the data goes to training vs testing? How many random splits you generate.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 <div class="footer">
 
 </div>
@@ -2771,6 +2784,19 @@ Brier_{class} = \frac{1}{N}\sum_{i=1}^N\sum_{k=1}^C (y_{ik} - \hat{p}_{ik})^2
 <div class="footer">
 
 </div>
+<aside class="notes">
+<p>creating a single train/validation split and extracting the validation data for evaluation This randomly splits your dataset forested into: Training set (default = 3/4 or 75% of the data) Validation set (default = 1/4 or 25% of the data) it’s similar to initial_split(), but intended specifically for validation workflows often used when you are holding out a validation set to tune models before testing on a final test set</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </div>
 </section></section>
 <section id="decision-tree" class="title-slide slide level1 center">
@@ -2801,6 +2827,19 @@ Brier_{class} = \frac{1}{N}\sum_{i=1}^N\sum_{k=1}^C (y_{ik} - \hat{p}_{ik})^2
 <div class="footer">
 
 </div>
+<aside class="notes">
+<p>Bootstrap Aggregating (“Bagging”) - Bootstrap = Randomly sample your training data with replacement. - Aggregating = Build many trees on different bootstrapped samples and average (for regression) or vote (for classification).</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </div>
 </section>
 <section id="create-a-random-forest-model" class="slide level2">
@@ -2987,6 +3026,19 @@ Brier_{class} = \frac{1}{N}\sum_{i=1}^N\sum_{k=1}^C (y_{ik} - \hat{p}_{ik})^2
 <div class="footer">
 
 </div>
+<aside class="notes">
+<p>Pulls out the trained workflow from final_fit. - This workflow includes: - The preprocessing recipe (if any) - The trained model (your random forest) 0 Any settings or structure you built inside rf_wflow This is useful because after last_fit(), you often want to save, inspect, or refit the trained model without re-training everything.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </div>
 </section>
 <section id="the-whole-game" class="slide level2">
@@ -3083,6 +3135,19 @@ Brier_{class} = \frac{1}{N}\sum_{i=1}^N\sum_{k=1}^C (y_{ik} - \hat{p}_{ik})^2
 <div class="footer">
 
 </div>
+<aside class="notes">
+<p>So you are telling tidymodels: “Don’t fix min_n (the minimum number of observations needed to make a split at a node) yet, treat it as a hyperparameter that I want to search for the best value during tuning.” min_n controls how deep or complex the trees can grow: - Smaller min_n → deeper trees → more complex models (potential overfitting) - Larger min_n → shallower trees → simpler models (maybe underfitting) - It’s a form of tree regularization. During hyperparameter tuning, tidymodels will try different values of min_n (like 2, 5, 10, 20, etc.) across resampling (like cross-validation). It chooses the best value based on performance (accuracy, ROC AUC, etc.).</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="try-out-multiple-values" class="slide level2">
 <h2>Try out multiple values</h2>
@@ -3095,6 +3160,21 @@ Brier_{class} = \frac{1}{N}\sum_{i=1}^N\sum_{k=1}^C (y_{ik} - \hat{p}_{ik})^2
 <span id="cb62-5"><a href=""></a>  <span class="at">grid =</span> <span class="dv">5</span></span>
 <span id="cb62-6"><a href=""></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<aside class="notes">
+<p>you’re saying: use cross-validation to search for the best value of the tuning parameters. rf_wflow is your workflow that includes: - a random forest model - and a formula (like forested ~ .) forested_folds are your validation folds (cross-validation plan).<br>
+grid = 5 means: “Try 5 different values” for each tunable parameter</p>
+<p>It will generate 5 different random values for min_n (because you set min_n = tune() earlier). - For each value: - Train models across all the folds - Evaluate performance (accuracy, ROC AUC, or other default metrics) - Save all results in rf_res. For each of the 5 grid points (i.e., each different min_n value): - Fit the model on 9 folds - Validate the model on 1 fold - Repeat for all folds - Aggregate performance metrics - Rank which min_n value worked best</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 <div class="footer">
 
 </div>
@@ -3121,6 +3201,21 @@ Brier_{class} = \frac{1}{N}\sum_{i=1}^N\sum_{k=1}^C (y_{ik} - \hat{p}_{ik})^2
 <span id="cb63-16"><a href=""></a><span class="co">#&gt; 1    31 Preprocessor1_Model2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><code>collect_metrics()</code> and <code>autoplot()</code> are also available.</p>
+<aside class="notes">
+<p>rf_res is the result of your tune_grid() — meaning: - It contains the performance results for each tuning parameter value tried (in your case, for different min_n values). - show_best(rf_res):</p>
+<p>Displays the top-performing tuning results — ranked by your default or chosen metric (usually highest accuracy or ROC AUC).</p>
+<p>select_best(rf_res) picks the best hyperparameter values found during tuning, so you can finalize and refit your model properly for deployment or final evaluation.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 <div class="footer">
 
 </div>
@@ -3143,6 +3238,19 @@ Brier_{class} = \frac{1}{N}\sum_{i=1}^N\sum_{k=1}^C (y_{ik} - \hat{p}_{ik})^2
 <div class="footer">
 
 </div>
+<aside class="notes">
+<p>The ⁠finalize_*⁠ functions take a list or tibble of tuning parameter values and update objects with those values.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="your-turn-14" class="slide level2" data-transition="slide-in">
 <h2>Your turn</h2>
@@ -3160,9 +3268,70 @@ Brier_{class} = \frac{1}{N}\sum_{i=1}^N\sum_{k=1}^C (y_{ik} - \hat{p}_{ik})^2
 
 </div>
 <p><img data-src="images/parsnip-flagger.jpg" class="absolute" style="top: 0px; right: 0px; width: 150px; height: 150px; "></p>
+</section>
+<section id="how-can-we-compare-multiple-model-workflows-at-once" class="slide level2">
+<h2>How can we compare multiple model workflows at once?</h2>
+
+<img data-src="images/forest_mountain.svg" class="quarto-figure quarto-figure-center r-stretch"><div class="footer">
+
+</div>
+</section>
+<section id="evaluate-a-workflow-set" class="slide level2">
+<h2>Evaluate a workflow set</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href=""></a>wf_set <span class="ot">&lt;-</span> <span class="fu">workflow_set</span>(<span class="fu">list</span>(forested <span class="sc">~</span> .), <span class="fu">list</span>(tree_spec, rf_spec))</span>
+<span id="cb65-2"><a href=""></a>wf_set</span>
+<span id="cb65-3"><a href=""></a><span class="co">#&gt; # A workflow set/tibble: 2 × 4</span></span>
+<span id="cb65-4"><a href=""></a><span class="co">#&gt;   wflow_id              info             option    result    </span></span>
+<span id="cb65-5"><a href=""></a><span class="co">#&gt;   &lt;chr&gt;                 &lt;list&gt;           &lt;list&gt;    &lt;list&gt;    </span></span>
+<span id="cb65-6"><a href=""></a><span class="co">#&gt; 1 formula_decision_tree &lt;tibble [1 × 4]&gt; &lt;opts[0]&gt; &lt;list [0]&gt;</span></span>
+<span id="cb65-7"><a href=""></a><span class="co">#&gt; 2 formula_rand_forest   &lt;tibble [1 × 4]&gt; &lt;opts[0]&gt; &lt;list [0]&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="footer">
+
+</div>
+</section>
+<section id="evaluate-a-workflow-set-1" class="slide level2">
+<h2>Evaluate a workflow set</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href=""></a>wf_set_fit <span class="ot">&lt;-</span> wf_set <span class="sc">%&gt;%</span></span>
+<span id="cb66-2"><a href=""></a>  <span class="fu">workflow_map</span>(<span class="st">"fit_resamples"</span>, <span class="at">resamples =</span> forested_folds)</span>
+<span id="cb66-3"><a href=""></a>wf_set_fit</span>
+<span id="cb66-4"><a href=""></a><span class="co">#&gt; # A workflow set/tibble: 2 × 4</span></span>
+<span id="cb66-5"><a href=""></a><span class="co">#&gt;   wflow_id              info             option    result   </span></span>
+<span id="cb66-6"><a href=""></a><span class="co">#&gt;   &lt;chr&gt;                 &lt;list&gt;           &lt;list&gt;    &lt;list&gt;   </span></span>
+<span id="cb66-7"><a href=""></a><span class="co">#&gt; 1 formula_decision_tree &lt;tibble [1 × 4]&gt; &lt;opts[1]&gt; &lt;rsmp[+]&gt;</span></span>
+<span id="cb66-8"><a href=""></a><span class="co">#&gt; 2 formula_rand_forest   &lt;tibble [1 × 4]&gt; &lt;opts[1]&gt; &lt;rsmp[+]&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="footer">
+
+</div>
+</section>
+<section id="evaluate-a-workflow-set-2" class="slide level2">
+<h2>Evaluate a workflow set</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href=""></a>wf_set_fit <span class="sc">%&gt;%</span></span>
+<span id="cb67-2"><a href=""></a>  <span class="fu">rank_results</span>()</span>
+<span id="cb67-3"><a href=""></a><span class="co">#&gt; # A tibble: 6 × 9</span></span>
+<span id="cb67-4"><a href=""></a><span class="co">#&gt;   wflow_id         .config .metric   mean std_err     n preprocessor model  rank</span></span>
+<span id="cb67-5"><a href=""></a><span class="co">#&gt;   &lt;chr&gt;            &lt;chr&gt;   &lt;chr&gt;    &lt;dbl&gt;   &lt;dbl&gt; &lt;int&gt; &lt;chr&gt;        &lt;chr&gt; &lt;int&gt;</span></span>
+<span id="cb67-6"><a href=""></a><span class="co">#&gt; 1 formula_rand_fo… Prepro… accura… 0.919  0.00525    10 formula      rand…     1</span></span>
+<span id="cb67-7"><a href=""></a><span class="co">#&gt; 2 formula_rand_fo… Prepro… brier_… 0.0617 0.00338    10 formula      rand…     1</span></span>
+<span id="cb67-8"><a href=""></a><span class="co">#&gt; 3 formula_rand_fo… Prepro… roc_auc 0.972  0.00310    10 formula      rand…     1</span></span>
+<span id="cb67-9"><a href=""></a><span class="co">#&gt; 4 formula_decisio… Prepro… accura… 0.894  0.00562    10 formula      deci…     2</span></span>
+<span id="cb67-10"><a href=""></a><span class="co">#&gt; 5 formula_decisio… Prepro… brier_… 0.0817 0.00434    10 formula      deci…     2</span></span>
+<span id="cb67-11"><a href=""></a><span class="co">#&gt; 6 formula_decisio… Prepro… roc_auc 0.951  0.00378    10 formula      deci…     2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The first metric of the metric set is used for ranking. Use <code>rank_metric</code> to change that.</p>
+<div class="fragment">
+<p>Lots more available with workflow sets, like <code>collect_metrics()</code>, <code>autoplot()</code> methods, and more!</p>
+<div class="footer">
+
+</div>
 <div class="quarto-auto-generated-content">
 <div class="footer footer-default">
 <p>inspired and adapted from <a href="https://tidymodels.org" class="uri">https://tidymodels.org</a> and <a href="https://workshops.tidymodels.org" class="uri">https://workshops.tidymodels.org</a></p>
+</div>
 </div>
 </div>
 </section></section>
