@@ -2673,6 +2673,40 @@ and deployable in production</code></pre>
 </div>
 </div>
 </div></div>
+<aside class="notes">
+<p>This is called non-racing resampling, meaning:</p>
+<ul>
+<li><p>All candidates are fully evaluated on all resamples.</p></li>
+<li><p>Contrast this with racing methods, which drop poor performers early to save time.</p></li>
+<li><p>Each colored line represents the results of a single resample.</p></li>
+<li><p>The y-axis is the model error (lower is better).</p></li>
+<li><p>The x-axis shows the two model candidates.</p></li>
+</ul>
+<p>Each Line Connects One Resample Across Models:</p>
+<ul>
+<li>You see how each resample (fold) ranks the models.</li>
+<li>Most lines go downward from candidate 1 to candidate 2 → indicating candidate 2 generally performs better (lower error).</li>
+</ul>
+<p>Resample-to-Resample Variability:</p>
+<ul>
+<li>Some lines are steeper or flatter than others.</li>
+<li>This shows that performance varies across folds (which is expected in cross-validation).</li>
+</ul>
+<p>A rank correlation of 0.83 suggests a strong agreement:</p>
+<ul>
+<li>If candidate 2 performs better in one fold, it’s likely to perform better in most others.</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 <div class="footer">
 
 </div>
@@ -2692,7 +2726,7 @@ and deployable in production</code></pre>
 <h2>Evaluating Differences in Candidates</h2>
 <div class="columns">
 <div class="column" style="width:40%;">
-<p>What if we were to have compared the candidates while we seqeuntially evaluated each resample?</p>
+<p>What if we were to have compared the candidates while we sequentially evaluated each resample?</p>
 <p>👉</p>
 <p><be></be></p>
 <p>One candidate shows superiority when 4 resamples have been evaluated.</p>
@@ -2707,6 +2741,36 @@ and deployable in production</code></pre>
 </div>
 </div>
 </div></div>
+<aside class="notes">
+<p>You’re seeing what happens when you evaluate candidate models incrementally, resample by resample.</p>
+<p>Y-axis: error difference from best</p>
+<ul>
+<li>How much worse each candidate is compared to the current best.</li>
+<li>0 means no difference (best performer so far).</li>
+</ul>
+<p>X-axis: number of resamples - As more resamples are completed (e.g., cross-validation folds), you collect better estimates.</p>
+<p>Error bars</p>
+<ul>
+<li>Represent uncertainty around the performance difference at each step (standard error or confidence intervals).</li>
+</ul>
+<p>After just 4 resamples (X = 4), you already start to see a clear trend:</p>
+<ul>
+<li>One candidate consistently has lower error</li>
+<li>Its confidence interval no longer overlaps the red line (= best so far)</li>
+<li>This implies you might not need all 10 resamples to make a decision.</li>
+</ul>
+<p>Focuses resources on promising candidates!</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 <div class="footer">
 
 </div>
@@ -2719,6 +2783,90 @@ and deployable in production</code></pre>
 <p><br></p>
 <p><a href="https://arxiv.org/abs/1405.6974">Kuhn (2014)</a> has examples and simulations to show that the method works.</p>
 <p>The <a href="https://finetune.tidymodels.org/">finetune</a> package has functions <code>tune_race_anova()</code> and <code>tune_race_win_loss()</code>.</p>
+<aside class="notes">
+<p>Instead of evaluating all candidate models across all resamples, we:</p>
+<ol type="1">
+<li>Evaluate resamples sequentially</li>
+<li>Use a mixed model ANOVA to compare each model’s performance to the current best</li>
+<li>Drop bad performers early based on a statistical rule</li>
+</ol>
+<p>Statistical Rule:</p>
+<p>“One-sided confidence intervals” are computed for each model’s error difference vs.&nbsp;the best model.</p>
+<ul>
+<li><p>A two-sided CI answers: “How different could this model be, in either direction?”</p></li>
+<li><p>A one-sided CI answers: “How much worse could this model be compared to the best?”</p></li>
+<li><p>Focuses only on whether a model is worse, not better.</p></li>
+<li><p>It’s a statistical test for inferiority.</p></li>
+</ul>
+<p>Let’s say we compute:</p>
+<p>Mean Error of Model A - Mean Error of Best Model = <span class="math inline">\(\Delta\)</span></p>
+<p>And estimate a standard error from the resamples.</p>
+<p>We then construct a one-sided upper confidence interval: <span class="math inline">\(\Delta + z \cdot SE\)</span></p>
+<p>If this interval is entirely greater than 0, we’re confident that Model A is worse than the best, and we can drop it.</p>
+<ul>
+<li>If zero is not in the interval, the model is statistically unlikely to be best</li>
+<li>If zero is included, we can’t be sure — keep evaluating.</li>
+</ul>
+<p>Statistically principled — not just based on raw ranks or averages.</p>
+<p>steps 1–2: Collect early resample results</p>
+<p>steps 2+: Compute mean &amp; SE of error difference</p>
+<p>Video:</p>
+<ol type="1">
+<li>Start: All Models In</li>
+</ol>
+<ul>
+<li>A large number of models (e.g., 20–30 combinations of preprocessing + algorithm) are listed.</li>
+<li>Each model starts off evaluated on just 1 resample.</li>
+<li>All models are marked black — meaning: still under evaluation.</li>
+</ul>
+<ol start="2" type="1">
+<li>As More Resamples Are Evaluated</li>
+</ol>
+<ul>
+<li>Each iteration corresponds to a new fold being evaluated.</li>
+<li>For each model, the plot updates:</li>
+<li>The point (average loss vs.&nbsp;best model)</li>
+<li>The error bar (confidence interval for that loss)</li>
+</ul>
+<ol start="3" type="1">
+<li>One Model Becomes the Leader</li>
+</ol>
+<ul>
+<li>The model with the lowest mean error becomes the current best (marked blue).</li>
+<li>Other models’ performance is now measured as loss compared to the best (e.g., Loss of ROC AUC).</li>
+</ul>
+<ol start="4" type="1">
+<li>Elimination Begins</li>
+</ol>
+<ul>
+<li>Once a model’s one-sided confidence interval no longer includes 0, it is statistically worse.</li>
+<li>It gets gray and disappears (dropped from further evaluation).</li>
+<li>This is the essence of racing — eliminating models that clearly won’t win.</li>
+</ul>
+<ol start="5" type="1">
+<li>End Game: Fewer Models Remaining</li>
+</ol>
+<ul>
+<li>As resamples accumulate, uncertainty shrinks (error bars tighten).</li>
+<li>Most poor-performing models are eliminated.</li>
+<li>Only a handful of strong candidates remain.</li>
+</ul>
+<p>Eventually:</p>
+<ul>
+<li>One model is confirmed best</li>
+<li>Other models are either retained (uncertain) or discarded</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 <div class="footer">
 
 </div>
@@ -2782,6 +2930,64 @@ and deployable in production</code></pre>
 </div>
 </div>
 </div></div>
+<aside class="notes">
+<p>X-axis: Analysis Stage</p>
+<ul>
+<li>Each number (1–10) represents a stage in the racing process — roughly corresponding to how many resamples (e.g., CV folds) have been used to evaluate each model.</li>
+</ul>
+<p>Y-axis: mae</p>
+<ul>
+<li>Mean Absolute Error (MAE) — a lower value is better.</li>
+<li>It shows the current estimated performance of each candidate model at each stage.</li>
+</ul>
+<p>Colored lines:</p>
+<ul>
+<li>Each line represents a single candidate model (e.g., a unique combo of hyperparameters and preprocessing).</li>
+<li>The lines trace each model’s cumulative average MAE as more resamples are completed.</li>
+</ul>
+<p>Interpretation</p>
+<ol type="1">
+<li>Early stages (left side):</li>
+</ol>
+<ul>
+<li>All models are present.</li>
+<li>MAE estimates are noisy (due to fewer resamples).</li>
+<li>You see a wide spread: some models are at ~10 MAE, others are 20–50+.</li>
+</ul>
+<ol start="2" type="1">
+<li>Middle stages (~Stage 4–5):</li>
+</ol>
+<ul>
+<li>Poor models (high MAE) stop updating → they’ve been discarded by racing.</li>
+<li>Only promising models remain (lines flatten out).</li>
+</ul>
+<ol start="3" type="1">
+<li>Later stages (~Stage 6–10):</li>
+</ol>
+<ul>
+<li>Only top-performing models are still being evaluated.</li>
+<li>Their MAE estimates stabilize.</li>
+<li>Most high-MAE lines disappear (they were dropped earlier).</li>
+</ul>
+<p>So we see that:</p>
+<ul>
+<li>Racing is working as intended:</li>
+<li>Poor models are eliminated early (saves time).</li>
+<li>Good models are evaluated fully.</li>
+<li>The best model is likely the one with the flattest line near the bottom (lowest MAE).</li>
+<li>Most models were clearly worse (many start &gt; MAE 20 or 30) and got dropped before stage 6.</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 <div class="footer">
 
 </div>
@@ -2797,6 +3003,24 @@ and deployable in production</code></pre>
 <div class="countdown" id="racing-repeat" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
 <div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
 <code class="countdown-time"><span class="countdown-digits minutes">10</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+</div>
+</div>
+<div class="footer">
+
+</div>
+</section>
+<section id="your-turn-8" class="slide level2" data-transition="slide-in">
+<h2>Your turn</h2>
+<ul>
+<li><p><em>Now repeat the process using <code>tune_race_anova()</code>, but this time focus on performance metric <code>rsq</code> (use <code>set.seed(9)</code> as before).</em></p></li>
+<li><p><em>What can you conclude when you compare results from <code>mae</code> and <code>rsq</code>?</em></p></li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<div class="countdown" id="racing-repeat" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
+<code class="countdown-time"><span class="countdown-digits minutes">15</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 </div>
 </div>
@@ -2985,7 +3209,7 @@ and deployable in production</code></pre>
 
 </div>
 </section>
-<section id="your-turn-8" class="slide level2" data-transition="slide-in">
+<section id="your-turn-9" class="slide level2" data-transition="slide-in">
 <h2>Your turn</h2>
 <div class="columns">
 <div class="column" style="width:50%;">
@@ -3359,7 +3583,7 @@ and deployable in production</code></pre>
 
 </div>
 </section>
-<section id="your-turn-9" class="slide level2" data-transition="slide-in">
+<section id="your-turn-10" class="slide level2" data-transition="slide-in">
 <h2>Your turn</h2>
 <p><em>Let’s try a different acquisition function: <code>conf_bound(kappa)</code>.</em></p>
 <p><em>We’ll use the <code>objective</code> argument to set it.</em></p>
@@ -3389,6 +3613,9 @@ and deployable in production</code></pre>
 <li><p>There are <a href="https://github.com/topepo/Optimization-Methods-for-Tuning-Predictive-Models">a lot of other iterative methods</a> that you can use.</p></li>
 <li><p>The finetune package also has functions for <a href="https://www.tmwr.org/iterative-search.html#simulated-annealing">simulated annealing</a> search.</p></li>
 </ul>
+<div class="footer">
+
+</div>
 </section>
 <section id="finalizing-the-model" class="slide level2">
 <h2>Finalizing the Model</h2>
